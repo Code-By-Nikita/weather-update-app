@@ -32,3 +32,7 @@ A multilingual weather application built with React that fetches real-time weath
    ```bash
    git clone https://github.com/Code-By-Nikita/weather-update-app.git
    cd weather-update-app
+
+## Run Live app
+
+Type this URL in your browser for accessing the live app https://Code-By-Nikita.github.io/weather-update-app
