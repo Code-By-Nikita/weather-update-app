@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Search = ({ onSearch }) => {
   const [city, setCity] = useState('');
+   const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,15 +14,15 @@ const Search = ({ onSearch }) => {
     <form onSubmit={handleSubmit} className="flex items-center justify-center gap-2 mb-6">
       <input
         type="text"
-        placeholder="Enter your city"
+        placeholder= {t('enter_city')}
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        className="px-3 py-2 border rounded"
+        className="px-2 py-1 border rounded"
       />
       <button
         type="submit"
         className="
-    px-4 py-2
+    px-2 py-1
     bg-sky-500
     text-white
     rounded
@@ -36,7 +38,7 @@ const Search = ({ onSearch }) => {
     focus:ring-sky-400
     focus:ring-opacity-50
   ">
-        Search
+         {t('search')}
       </button>
 
     </form>
