@@ -14,14 +14,14 @@ const WeatherApp = () => {
   const getWeatherIcon = (weathercode) => {
     switch (weathercode) {
       case 0: // Clear sky
-        return '/assets/images/Clear.png';
+        return '/weather-update-app/assets/images/Clear.png';
 
       case 1: // Mainly clear
       case 2: // Partly cloudy
       case 3: // Overcast
       case 45: // Fog
       case 48: // Depositing rime fog
-        return '/assets/images/Clear.png';
+        return '/weather-update-app/assets/images/Clear.png';
 
       case 51: // Light drizzle
       case 53: // Moderate drizzle
@@ -32,7 +32,7 @@ const WeatherApp = () => {
       case 80: // Rain showers
       case 81:
       case 82:
-        return '/assets/images/Rain.png';
+        return '/weather-update-app/assets/images/Rain.png';
 
       case 71: // Light snow
       case 73: // Moderate snow
@@ -40,15 +40,15 @@ const WeatherApp = () => {
       case 77: // Snow grains
       case 85: // Light snow showers
       case 86: // Heavy snow showers
-        return '/assets/images/Winter.png';
+        return '/weather-update-app/assets/images/Winter.png';
 
       case 95: // Thunderstorm
       case 96:
       case 99:
-        return '/assets/images/Thunderstrom.png';
+        return '/weather-update-app/assets/images/Thunderstrom.png';
 
       default:
-        return '/assets/images/Clear.png'; // fallback icon
+        return '/weather-update-app/assets/images/Clear.png'; // fallback icon
     }
   };
 
