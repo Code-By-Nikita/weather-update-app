@@ -10,19 +10,19 @@ const WeatherApp = () => {
   const { t } = useTranslation();
   const [weatherData, setWeatherData] = useState(null);
 
-  // Helper function to map weather codes to your icons
-  const getWeatherIcon = (weathercode, windspeed) => {
-    if (windspeed > 10) return '/assets/images/Wind.png';
-
+  // Only use weathercode to decide image
+  const getWeatherIcon = (weathercode) => {
     switch (weathercode) {
       case 0: // Clear sky
         return '/assets/images/Clear.png';
+
       case 1: // Mainly clear
       case 2: // Partly cloudy
       case 3: // Overcast
       case 45: // Fog
       case 48: // Depositing rime fog
-        return '/assets/images/Cloud.png';
+        return '/assets/images/Clear.png';
+
       case 51: // Light drizzle
       case 53: // Moderate drizzle
       case 55: // Dense drizzle
@@ -33,26 +33,27 @@ const WeatherApp = () => {
       case 81:
       case 82:
         return '/assets/images/Rain.png';
+
       case 71: // Light snow
       case 73: // Moderate snow
       case 75: // Heavy snow
       case 77: // Snow grains
       case 85: // Light snow showers
       case 86: // Heavy snow showers
-        return '/assets/images/Snow.png';
+        return '/assets/images/Winter.png';
+
       case 95: // Thunderstorm
       case 96:
       case 99:
-        return '/assets/images/Thnderstrom.png';
+        return '/assets/images/Thunderstrom.png';
+
       default:
         return '/assets/images/Clear.png'; // fallback icon
     }
   };
 
-  // Map weather code and windspeed to translation quote key
-  const getWeatherQuoteKey = (weathercode, windspeed) => {
-    if (windspeed > 10) return 'windy_quote';
-
+  // Use weathercode only for quote keys; no windy quote
+  const getWeatherQuoteKey = (weathercode) => {
     switch (weathercode) {
       case 0:
         return 'sunny_quote';
@@ -61,7 +62,7 @@ const WeatherApp = () => {
       case 3:
       case 45:
       case 48:
-        return 'sunny_quote'; // or 'cloudy_quote' if you have
+        return 'sunny_quote'; // or 'cloudy_quote' if you want
       case 51:
       case 53:
       case 55:
@@ -95,7 +96,7 @@ const WeatherApp = () => {
         return;
       }
 
-      // Step 1: Get latitude and longitude of the city
+      // Get latitude and longitude
       const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}`);
       const geoData = await geoRes.json();
 
@@ -105,14 +106,14 @@ const WeatherApp = () => {
 
       const { latitude, longitude, name } = geoData.results[0];
 
-      // Step 2: Get current weather for the lat/lon
+      // Get weather
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
       );
       const weatherData = await weatherRes.json();
 
-      const iconPath = getWeatherIcon(weatherData.current_weather.weathercode, weatherData.current_weather.windspeed);
-      const quoteKey = getWeatherQuoteKey(weatherData.current_weather.weathercode, weatherData.current_weather.windspeed);
+      const iconPath = getWeatherIcon(weatherData.current_weather.weathercode);
+      const quoteKey = getWeatherQuoteKey(weatherData.current_weather.weathercode);
 
       const mappedData = {
         location: { name },
@@ -149,7 +150,7 @@ const WeatherApp = () => {
             city={weatherData.location.name}
             temperature={`${weatherData.current.temp_c}°C`}
             imageSrc1={weatherData.current.condition.icon}
-            quoteKey={weatherData.current.quoteKey} // pass quote key to Card
+            quoteKey={weatherData.current.quoteKey}
           />
         )}
       </div>
